@@ -1,0 +1,44 @@
+version: '2'
+services:
+  telimongo:
+    image: mongo:bionic
+    container_name: telimongo
+    volumes:
+      - data:/data
+    networks:
+      - teli
+  teliapi:
+    build:
+      context: ./
+      dockerfile: api/Dockerfile
+    image: teliapi
+    container_name: teliapi
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../tekstitliikkeessa_api:/home/developer/project
+      - wwwroot:/wwwroot
+    networks:
+      - teli
+  teli-wp:
+    build:
+      context: ./
+      dockerfile: webpack/Dockerfile
+    image: teli-wp
+    container_name: teli-wp
+    ports:
+      - "35729:35729" # for live reload
+      - "8080:8080" # 
+    volumes:
+      - ../teskstitliikkeessa_frontend:/app
+      - wwwroot:/wwwroot
+    networks:
+      - teli
+volumes:
+  data:
+    driver: local
+  wwwroot:
+    driver: local
+networks:
+  teli:
+
