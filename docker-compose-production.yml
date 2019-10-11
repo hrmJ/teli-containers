@@ -10,7 +10,7 @@ services:
   teliapi:
     build:
       context: ./
-      dockerfile: api/Dockerfile
+      dockerfile: api/Dockerfile.prod
     image: teliapi
     container_name: teliapi
     ports:
@@ -20,18 +20,18 @@ services:
       - wwwroot:/wwwroot
     networks:
       - teli
-  teli-wp:
+  telinginx:
     build:
-      context: ./
-      dockerfile: webpack/Dockerfile
-    image: teli-wp
-    container_name: teli-wp
+      context: ./telinginx
+      dockerfile: Dockerfile
+    image: telinginx
+    container_name: telinginx
     ports:
-      - "35729:35729" # for live reload
-      - "8080:8080" # 
+      - "8000:8000"
     volumes:
-      - ../tekstitliikkeessa_frontend:/app
+      - ../tekstitliikkeessa_frontend/dist:/usr/share/nginx/html/
       - wwwroot:/wwwroot
+    tty: true
     networks:
       - teli
 volumes:
