@@ -32,7 +32,14 @@ RUN sudo bash node.sh --yes
 
 RUN sudo ln -s /home/developer/.nvm/versions/node/v10.16.3/bin/node /usr/bin/node 
 
-ENTRYPOINT cd project && /usr/bin/yarn serve
+#COPY launch.sh /home/developer/
+COPY tekstitliikkeessa_api/ project
+RUN sudo chown -R developer:developer project
+#RUN sudo chown -R developer:developer project/dist
+#RUN sudo chown -R developer:developer project/yarn.lock
+#RUN sudo chown -R developer:developer project/package.json
+#RUN sudo chown -R developer:developer project/README.md
+ENTRYPOINT  cd project && /usr/bin/yarn serve-nobuild
 #CMD ['watch']
 
 
