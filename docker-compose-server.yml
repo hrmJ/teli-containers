@@ -14,8 +14,7 @@ services:
       - "3000:3000"
     volumes:
       - wwwroot:/wwwroot
-        #    env_file:
-        #      - api.env
+    env_file: .env
     networks:
       - teli
   telinginx:
