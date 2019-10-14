@@ -38,7 +38,7 @@ RUN sudo apt update && sudo apt install -y python2.7 build-essential
 ENV PYTHON /usr/bin/python2.7
 WORKDIR "/home/$DOCKER_USER/project"
 RUN yarn install
-ENTRYPOINT  cd project && /usr/bin/yarn serve
+ENTRYPOINT  /usr/bin/yarn serve
 
 
 
