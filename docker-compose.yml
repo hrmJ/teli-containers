@@ -12,6 +12,7 @@ services:
       context: ./
       dockerfile: api/Dockerfile
     image: teliapi
+    env_file: .env
     container_name: teliapi
     ports:
       - "3000:3000"
