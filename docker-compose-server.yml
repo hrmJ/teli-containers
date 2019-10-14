@@ -17,6 +17,16 @@ services:
     env_file: .env
     networks:
       - teli
+  telinginx:
+    image: hrmj/telinginx
+    container_name: telinginx
+    ports:
+      - "8000:8000"
+    volumes:
+      - wwwroot:/wwwroot
+    tty: true
+    networks:
+      - teli
 volumes:
   data:
     driver: local
