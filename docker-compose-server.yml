@@ -11,6 +11,8 @@ services:
   teliapi:
     image: hrmj/teliapi
     container_name: teliapi
+    depends_on:
+      - "telimongo"
     ports:
       - "3000:3000"
     volumes:
