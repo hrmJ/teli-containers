@@ -1,7 +1,13 @@
 FROM node:10
 WORKDIR /usr/src/app
+RUN npm install --global yarn
 COPY tekstitliikkeessa_api/package*.json ./
-RUN npm ci --only=production
+#RUN npm ci --only=production
+RUN npm install
+RUN yarn add @babel/cli
 COPY tekstitliikkeessa_api/src src
-ENTRYPOINT  npm run serve
+COPY tekstitliikkeessa_api/scripts scripts
+COPY tekstitliikkeessa_api/.* ./
+#ENTRYPOINT /bin/bash
+ENTRYPOINT yarn run serve
 
