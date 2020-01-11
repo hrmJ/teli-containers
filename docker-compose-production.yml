@@ -7,33 +7,36 @@ services:
       - data:/data
     networks:
       - teli
+    restart: always
   teliapi:
     build:
       context: ../
       dockerfile: containers/api/Dockerfile.prod
-    image: hrmj/teliapi
     container_name: teliapi
+    depends_on:
+      - telimongo
     ports:
       - "3000:3000"
     volumes:
-      #- ../tekstitliikkeessa_api:/home/developer/project
+      - ../tekstitliikkeessa_api:/opt/api
       - wwwroot:/wwwroot
     networks:
       - teli
+    restart: always
   telinginx:
     build:
       context: ../
       dockerfile: containers/telinginx/Dockerfile
-    image: hrmj/telinginx
     container_name: telinginx
     ports:
       - "8000:8000"
     volumes:
-      #- ../tekstitliikkeessa_frontend/dist:/usr/share/nginx/html/
+      - ../tekstitliikkeessa_frontend/dist:/usr/share/nginx/html/
       - wwwroot:/wwwroot
     tty: true
     networks:
       - teli
+    restart: always
 volumes:
   data:
     driver: local
