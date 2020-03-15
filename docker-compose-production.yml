@@ -1,17 +1,16 @@
-version: '2'
+version: '3'
 services:
   telimongo:
-    image: mongo:bionic
+    image: mongo:latest
     container_name: telimongo
     volumes:
-      - data:/data
+      - newdata:/data/db
+        #- mongo-data10:/data/db
     networks:
       - teli
     restart: always
   teliapi:
-    build:
-      context: ../
-      dockerfile: containers/api/Dockerfile.prod
+    image: hrmj/teliapi
     container_name: teliapi
     depends_on:
       - telimongo
@@ -24,9 +23,7 @@ services:
       - teli
     restart: always
   telinginx:
-    build:
-      context: ../
-      dockerfile: containers/telinginx/Dockerfile
+    image: hrmj/telinginx
     container_name: telinginx
     ports:
       - "8000:8000"
@@ -38,6 +35,14 @@ services:
       - teli
     restart: always
 volumes:
+  newdata:
+    driver: local
+  mongo-data10:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/juho_harme/restore/data/db/
   data:
     driver: local
   wwwroot:
